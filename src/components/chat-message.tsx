@@ -12,6 +12,15 @@ export interface ChatMessageProps {
   timestamp: string
 }
 
+const getAuthorDisplayName = (author: ChatMessageProps["author"]) => {
+  switch (author) {
+    case "user":
+      return "You"
+    case "bonsai":
+      return "Bonsai"
+  }
+}
+
 export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
   return (
     <Card className={`w-full`}>
@@ -25,7 +34,7 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
           />
           <div className="flex flex-col gap-1 items-start justify-center">
             <h4 className="text-small font-semibold leading-none text-default-600">
-              {author}
+              {getAuthorDisplayName(author)}
             </h4>
           </div>
         </div>
@@ -34,7 +43,9 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
         <p>{body}</p>
       </CardBody>
       <CardFooter className="gap-3">
-        <p className="text-default-400 text-small">{timestamp}</p>
+        <p className="text-default-400 text-small">
+          {new Date(timestamp).toLocaleString()}
+        </p>
       </CardFooter>
     </Card>
   )
