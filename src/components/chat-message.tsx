@@ -21,11 +21,22 @@ const getAuthorDisplayName = (author: ChatMessageProps["author"]) => {
   }
 }
 
+let timeOptions = {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true
+} as const
+
+let dateOptions = {
+  month: "short",
+  day: "numeric"
+} as const
+
 export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
   return (
-    <Card className={`w-full`}>
+    <Card className="w-full p-2">
       <CardHeader className="justify-between">
-        <div className={`flex gap-5`}>
+        <div className="flex gap-5">
           <Avatar
             isBordered
             radius="full"
@@ -38,15 +49,16 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
             </h4>
           </div>
         </div>
+        <p className="text-default-400 text-small">
+          {`${new Date(timestamp).toLocaleString(
+            "en-US",
+            timeOptions
+          )}, ${new Date(timestamp).toLocaleString("en-US", dateOptions)}`}
+        </p>
       </CardHeader>
-      <CardBody className="px-3 py-0 text-small text-default-400">
+      <CardBody className="px-3 py-3 text-medium text-default-600">
         <p>{body}</p>
       </CardBody>
-      <CardFooter className="gap-3">
-        <p className="text-default-400 text-small">
-          {new Date(timestamp).toLocaleString()}
-        </p>
-      </CardFooter>
     </Card>
   )
 }
