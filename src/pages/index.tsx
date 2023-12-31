@@ -28,7 +28,7 @@ export const IndexPage = () => {
   }
 
   const onSendMessage = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && event.shiftKey === false) {
       const updatedMessages = [
         ...messages,
         {
@@ -37,6 +37,7 @@ export const IndexPage = () => {
           author: "user"
         } as const
       ]
+      setMessages(updatedMessages)
 
       const chatModelMessages = updatedMessages.map((message) => {
         if (message.author === "user") {
@@ -53,20 +54,25 @@ export const IndexPage = () => {
         body: "",
         author: "bonsai" as const
       }
-      setMessages([...updatedMessages, tempMessage])
+      let isStreaming = false
 
       chatModel.call(chatModelMessages, {
         callbacks: [
           {
             handleLLMNewToken(token: string) {
               tempMessage.body += token
-              setMessages((prevMessages) =>
-                prevMessages.map((message) =>
-                  message.timestamp === tempMessage.timestamp
-                    ? tempMessage
-                    : message
+              if (!isStreaming) {
+                isStreaming = true
+                setMessages([...updatedMessages, tempMessage])
+              } else {
+                setMessages((prevMessages) =>
+                  prevMessages.map((message) =>
+                    message.timestamp === tempMessage.timestamp
+                      ? tempMessage
+                      : message
+                  )
                 )
-              )
+              }
             }
           }
         ]
