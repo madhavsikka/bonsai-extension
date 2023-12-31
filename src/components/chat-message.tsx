@@ -5,7 +5,7 @@ import ChatMarkdown from "./chat-markdown"
 export interface ChatMessageProps {
   author: "user" | "bonsai"
   body: string
-  timestamp: string
+  timestamp: number
 }
 
 const getAuthorDisplayName = (author: ChatMessageProps["author"]) => {

@@ -15,7 +15,8 @@ import "~styles/globals.css"
 const chatModel = new ChatOpenAI({
   // modelName: "gpt-4-1106-preview",
   modelName: "gpt-3.5-turbo",
-  openAIApiKey: process.env.PLASMO_PUBLIC_OPENAI_API_KEY
+  openAIApiKey: process.env.PLASMO_PUBLIC_OPENAI_API_KEY,
+  streaming: true
 })
 
 export const IndexPage = () => {
@@ -31,13 +32,12 @@ export const IndexPage = () => {
       const updatedMessages = [
         ...messages,
         {
-          timestamp: new Date().toUTCString(),
+          timestamp: Date.now(),
           body: currentMessage,
           author: "user"
         } as const
       ]
 
-      setMessages(updatedMessages)
       const chatModelMessages = updatedMessages.map((message) => {
         if (message.author === "user") {
           return new HumanMessage(message.body)
@@ -48,16 +48,30 @@ export const IndexPage = () => {
         }
       })
 
-      chatModel.invoke(chatModelMessages).then((response) => {
-        setMessages([
-          ...updatedMessages,
+      let tempMessage = {
+        timestamp: Date.now() + 1,
+        body: "",
+        author: "bonsai" as const
+      }
+      setMessages([...updatedMessages, tempMessage])
+
+      chatModel.call(chatModelMessages, {
+        callbacks: [
           {
-            timestamp: new Date().toUTCString(),
-            body: response.content as string,
-            author: "bonsai"
+            handleLLMNewToken(token: string) {
+              tempMessage.body += token
+              setMessages((prevMessages) =>
+                prevMessages.map((message) =>
+                  message.timestamp === tempMessage.timestamp
+                    ? tempMessage
+                    : message
+                )
+              )
+            }
           }
-        ])
+        ]
       })
+
       setCurrentMessage("")
     }
   }
