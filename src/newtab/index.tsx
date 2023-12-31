@@ -1,4 +1,4 @@
-import IndexPage from "~pages"
+import IndexPage from "~pages/_app"
 
 const HomeTab = () => {
   return <IndexPage />
