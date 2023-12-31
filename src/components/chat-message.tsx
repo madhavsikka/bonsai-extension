@@ -1,4 +1,5 @@
 import { Avatar, Card, CardBody, CardHeader } from "@nextui-org/react"
+import leaf from "data-base64:~assets/leaf.png"
 
 import ChatMarkdown from "./chat-markdown"
 
@@ -37,7 +38,8 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
             isBordered
             radius="full"
             size="md"
-            src="/avatars/avatar-1.png"
+            showFallback
+            src={author === "bonsai" ? leaf : ""}
           />
           <div className="flex flex-col gap-1 items-start justify-center">
             <h4 className="text-small font-semibold leading-none text-default-600">
