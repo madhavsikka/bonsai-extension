@@ -13,6 +13,7 @@ import { ChatMessageList } from "~components/chat-message-list"
 import "~styles/globals.css"
 
 const chatModel = new ChatOpenAI({
+  // modelName: "gpt-4-1106-preview",
   modelName: "gpt-3.5-turbo",
   openAIApiKey: process.env.PLASMO_PUBLIC_OPENAI_API_KEY
 })

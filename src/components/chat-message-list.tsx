@@ -7,8 +7,8 @@ export interface ChatMessageListProps {
 export const ChatMessageList = ({ messages }: ChatMessageListProps) => {
   return (
     <div className="flex flex-col gap-5">
-      {messages.map((message) => {
-        return <ChatMessage {...message} />
+      {messages.map((message, idx) => {
+        return <ChatMessage {...message} key={idx} />
       })}
     </div>
   )

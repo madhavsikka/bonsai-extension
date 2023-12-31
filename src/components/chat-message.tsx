@@ -1,10 +1,6 @@
-import {
-  Avatar,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader
-} from "@nextui-org/react"
+import { Avatar, Card, CardBody, CardHeader } from "@nextui-org/react"
+
+import ChatMarkdown from "./chat-markdown"
 
 export interface ChatMessageProps {
   author: "user" | "bonsai"
@@ -57,7 +53,7 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
         </p>
       </CardHeader>
       <CardBody className="px-3 py-3 text-medium text-default-600">
-        <p>{body}</p>
+        <ChatMarkdown>{body}</ChatMarkdown>
       </CardBody>
     </Card>
   )
