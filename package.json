@@ -4,6 +4,11 @@
   "version": "0.0.1",
   "description": "AI assistant for the web.",
   "author": "madhavsikka99@gmail.com",
+  "pnpm": {
+    "overrides": {
+      "@langchain/core": "0.1.5"
+    }
+  },
   "scripts": {
     "start": "next start",
     "dev": "run-p dev:*",
@@ -14,6 +19,8 @@
     "build:next": "next build"
   },
   "dependencies": {
+    "@langchain/core": "0.1.5",
+    "@langchain/openai": "^0.0.9",
     "@nextui-org/react": "^2.2.9",
     "framer-motion": "^10.16.16",
     "langchain": "^0.0.212",
