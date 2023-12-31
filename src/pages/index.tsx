@@ -84,15 +84,18 @@ export const IndexPage = () => {
 
   return (
     <NextUIProvider className="flex flex-col h-full w-full">
-      <main className="dark text-foreground bg-background p-8 flex justify-center h-full">
-        <div className="flex flex-col w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2 gap-4 justify-between">
+      <main className="dark text-foreground bg-background flex justify-center h-full px-8 py-4">
+        <div className="flex flex-col w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2 mb-32">
           <ChatMessageList messages={messages} />
+        </div>
+        <div className="flex justify-center items-center fixed bottom-0 w-full bg-background px-8 py-4 z-10 h-32">
           <Textarea
             variant={"bordered"}
             label="Write something"
             value={currentMessage}
             onValueChange={onValueChange}
             onKeyDown={onSendMessage}
+            className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2"
           />
         </div>
       </main>
