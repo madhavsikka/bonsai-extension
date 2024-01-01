@@ -99,7 +99,7 @@ export const NewTabPage = () => {
       <div className="flex flex-col w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2">
         <ChatMessageList messages={messages} />
       </div>
-      <div className="flex justify-center fixed w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2 bottom-0 bg-background px-4 z-10 h-32">
+      <div className="flex justify-center fixed w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2 bottom-0 bg-background z-10 h-32">
         <Textarea
           variant={"bordered"}
           label="Write something"
