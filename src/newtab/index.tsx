@@ -1,7 +1,8 @@
-import IndexPage from "~pages/_app"
+import BonsaiApp from "~pages/_app"
+import NewTabPage from "~pages/newtab"
 
 const HomeTab = () => {
-  return <IndexPage />
+  return <BonsaiApp children={<NewTabPage />} />
 }
 
 export default HomeTab

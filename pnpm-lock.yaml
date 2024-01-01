@@ -26,6 +26,7 @@ specifiers:
   prettier: 3.0.3
   react: 18.2.0
   react-dom: 18.2.0
+  react-icons: ^4.12.0
   tailwindcss: ^3.4.0
   typescript: 5.2.2
 
@@ -39,6 +40,7 @@ dependencies:
   plasmo: 0.84.0_3dq2ulfprqx5lwbq5vkqzbjzpm
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-icons: 4.12.0_react@18.2.0
 
 devDependencies:
   '@ianvs/prettier-plugin-sort-imports': 4.1.1_prettier@3.0.3
@@ -8439,6 +8441,14 @@ packages:
 
   /react-error-overlay/6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
+    dev: false
+
+  /react-icons/4.12.0_react@18.2.0:
+    resolution: {integrity: sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-refresh/0.14.0:
