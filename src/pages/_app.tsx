@@ -3,7 +3,8 @@ import {
   HumanMessage,
   SystemMessage
 } from "@langchain/core/messages"
-import { NextUIProvider, Textarea } from "@nextui-org/react"
+import { Image, NextUIProvider, Textarea } from "@nextui-org/react"
+import star from "assets/star.svg"
 import { ChatOpenAI } from "langchain/chat_models/openai"
 import { useState } from "react"
 
@@ -86,6 +87,7 @@ export const IndexPage = () => {
     <NextUIProvider className="flex flex-col h-full w-full font-inter">
       <main className="dark text-foreground bg-background flex justify-center h-full px-8 py-4">
         <div className="fixed top-0 w-full h-16 bg-background px-16 py-4 flex justify-center items-center gap-1">
+          <Image src={star} alt="bonsai" width={24} height={24} />
           <p className="text-large font-semibold">bons.ai</p>
           <p className="text-large text-default-400">|</p>
           <p className="text-small text-default-400">The Zenful AI Assistant</p>
