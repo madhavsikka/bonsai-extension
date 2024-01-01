@@ -1,4 +1,4 @@
-import { Avatar, Card, CardBody, CardHeader } from "@nextui-org/react"
+import { Avatar, Card, CardBody, CardHeader, Skeleton } from "@nextui-org/react"
 import star from "assets/star.svg"
 
 import ChatMarkdown from "./chat-markdown"
@@ -7,6 +7,10 @@ export interface ChatMessageProps {
   author: "user" | "bonsai"
   body: string
   timestamp: number
+}
+export interface ChatMessageComponentProps {
+  message: ChatMessageProps
+  isLoading?: boolean
 }
 
 const getAuthorDisplayName = (author: ChatMessageProps["author"]) => {
@@ -29,7 +33,11 @@ let dateOptions = {
   day: "numeric"
 } as const
 
-export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
+export const ChatMessage = ({
+  message,
+  isLoading = false
+}: ChatMessageComponentProps) => {
+  const { author, body, timestamp } = message
   return (
     <Card className="w-full p-2">
       <CardHeader className="justify-between">
@@ -56,9 +64,11 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
           )}, ${new Date(timestamp).toLocaleString("en-US", dateOptions)}`}
         </p>
       </CardHeader>
-      <CardBody className="px-3 py-3 text-medium text-default-600">
-        <ChatMarkdown>{body}</ChatMarkdown>
-      </CardBody>
+      <Skeleton className="rounded-lg" isLoaded={!isLoading}>
+        <CardBody className="px-3 py-3 text-medium text-default-600">
+          <ChatMarkdown>{body}</ChatMarkdown>
+        </CardBody>
+      </Skeleton>
     </Card>
   )
 }

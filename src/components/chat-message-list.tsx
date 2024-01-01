@@ -1,7 +1,7 @@
-import { ChatMessage, type ChatMessageProps } from "./chat-message"
+import { ChatMessage, type ChatMessageComponentProps } from "./chat-message"
 
 export interface ChatMessageListProps {
-  messages: ChatMessageProps[]
+  messages: ChatMessageComponentProps[]
 }
 
 export const ChatMessageList = ({ messages }: ChatMessageListProps) => {

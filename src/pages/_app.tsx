@@ -8,7 +8,7 @@ import star from "assets/star.svg"
 import { ChatOpenAI } from "langchain/chat_models/openai"
 import { useState } from "react"
 
-import { type ChatMessageProps } from "~components/chat-message"
+import { type ChatMessageComponentProps } from "~components/chat-message"
 import { ChatMessageList } from "~components/chat-message-list"
 
 import "~styles/globals.css"
@@ -21,7 +21,7 @@ const chatModel = new ChatOpenAI({
 })
 
 export const IndexPage = () => {
-  const [messages, setMessages] = useState<ChatMessageProps[]>([])
+  const [messages, setMessages] = useState<ChatMessageComponentProps[]>([])
   const [currentMessage, setCurrentMessage] = useState<string>("")
 
   const onValueChange = (value: string) => {
@@ -30,17 +30,19 @@ export const IndexPage = () => {
 
   const onSendMessage = (event) => {
     if (event.key === "Enter" && event.shiftKey === false) {
-      const updatedMessages = [
+      const updatedMessageProps: ChatMessageComponentProps[] = [
         ...messages,
         {
-          timestamp: Date.now(),
-          body: currentMessage,
-          author: "user"
-        } as const
+          message: {
+            timestamp: Date.now(),
+            body: currentMessage,
+            author: "user"
+          } as const,
+          isLoading: false
+        }
       ]
-      setMessages(updatedMessages)
 
-      const chatModelMessages = updatedMessages.map((message) => {
+      const chatModelMessages = updatedMessageProps.map(({ message }) => {
         if (message.author === "user") {
           return new HumanMessage(message.body)
         } else if (message.author === "bonsai") {
@@ -50,30 +52,31 @@ export const IndexPage = () => {
         }
       })
 
-      let tempMessage = {
-        timestamp: Date.now() + 1,
-        body: "",
-        author: "bonsai" as const
+      let tempMessageProps: ChatMessageComponentProps = {
+        message: {
+          timestamp: Date.now() + 1,
+          body: "",
+          author: "bonsai" as const
+        },
+        isLoading: true
       }
-      let isStreaming = false
+
+      setMessages([...updatedMessageProps, tempMessageProps])
 
       chatModel.call(chatModelMessages, {
         callbacks: [
           {
             handleLLMNewToken(token: string) {
-              tempMessage.body += token
-              if (!isStreaming) {
-                isStreaming = true
-                setMessages([...updatedMessages, tempMessage])
-              } else {
-                setMessages((prevMessages) =>
-                  prevMessages.map((message) =>
-                    message.timestamp === tempMessage.timestamp
-                      ? tempMessage
-                      : message
-                  )
+              tempMessageProps.message.body += token
+              tempMessageProps.isLoading = false
+              setMessages((prevMessageProps) =>
+                prevMessageProps.map((prevMessageProp) =>
+                  prevMessageProp.message.timestamp ===
+                  tempMessageProps.message.timestamp
+                    ? tempMessageProps
+                    : prevMessageProp
                 )
-              }
+              )
             }
           }
         ]
