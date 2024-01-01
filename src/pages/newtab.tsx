@@ -5,22 +5,32 @@ import {
 } from "@langchain/core/messages"
 import { Textarea } from "@nextui-org/react"
 import { ChatOpenAI } from "langchain/chat_models/openai"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import { type ChatMessageComponentProps } from "~components/chat-message"
 import { ChatMessageList } from "~components/chat-message-list"
-
-import { LOCAL_STORAGE_OPENAI_KEY, LOCAL_STORAGE_OPENAI_MODEL } from "./options"
-
-const chatModel = new ChatOpenAI({
-  modelName: localStorage.getItem(LOCAL_STORAGE_OPENAI_MODEL),
-  openAIApiKey: localStorage.getItem(LOCAL_STORAGE_OPENAI_KEY),
-  streaming: true
-})
+import { useConfig } from "~hooks/use-config"
 
 export const NewTabPage = () => {
+  const { getOpenAIKey, getOpenAIModel } = useConfig()
+
+  if (getOpenAIKey() === "") {
+    chrome.runtime.openOptionsPage()
+    return <></>
+  }
+
   const [messages, setMessages] = useState<ChatMessageComponentProps[]>([])
   const [currentMessage, setCurrentMessage] = useState<string>("")
+
+  const chatModel = useMemo(
+    () =>
+      new ChatOpenAI({
+        modelName: getOpenAIModel(),
+        openAIApiKey: getOpenAIKey(),
+        streaming: true
+      }),
+    []
+  )
 
   const onValueChange = (value: string) => {
     setCurrentMessage(value)

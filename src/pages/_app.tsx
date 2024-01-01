@@ -6,8 +6,8 @@ import "~styles/globals.css"
 export const BonsaiApp = ({ children }) => {
   return (
     <NextUIProvider className="flex flex-col h-full w-full font-inter">
-      <main className="dark text-foreground bg-background flex flex-col justify-center h-full px-8 py-4">
-        <div className="fixed top-0 w-full h-16 bg-background px-16 py-4 flex justify-center items-center gap-1">
+      <main className="dark text-foreground bg-background flex flex-col justify-center h-full py-4">
+        <div className="fixed top-0 w-full h-16 bg-background px-0 py-4 flex justify-center items-center gap-1">
           <Image src={star} alt="bonsai" width={24} height={24} />
           <p className="text-large font-semibold">bons.ai</p>
           <p className="text-large text-default-400">|</p>
