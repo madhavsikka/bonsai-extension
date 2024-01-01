@@ -37,7 +37,7 @@ export const ChatMessage = ({ body, timestamp, author }: ChatMessageProps) => {
           <Avatar
             isBordered
             radius="full"
-            size="md"
+            size="sm"
             showFallback
             // @ts-ignore
             src={author === "bonsai" ? leaf : ""}

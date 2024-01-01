@@ -83,9 +83,14 @@ export const IndexPage = () => {
   }
 
   return (
-    <NextUIProvider className="flex flex-col h-full w-full">
+    <NextUIProvider className="flex flex-col h-full w-full font-inter">
       <main className="dark text-foreground bg-background flex justify-center h-full px-8 py-4">
-        <div className="flex flex-col w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2 mb-32">
+        <div className="fixed top-0 w-full h-16 bg-background px-16 py-4 flex justify-center items-center gap-1">
+          <p className="text-large font-semibold">bons.ai</p>
+          <p className="text-large text-default-400">|</p>
+          <p className="text-small text-default-400">The Zenful AI Assistant</p>
+        </div>
+        <div className="flex flex-col w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2 mt-16 mb-32">
           <ChatMessageList messages={messages} />
         </div>
         <div className="flex justify-center items-center fixed bottom-0 w-full bg-background px-8 py-4 z-10 h-32">
