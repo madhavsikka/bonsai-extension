@@ -1,5 +1,6 @@
-import { Image, NextUIProvider } from "@nextui-org/react"
+import { Button, Image, NextUIProvider, Tooltip } from "@nextui-org/react"
 import star from "assets/star.svg"
+import { SiBuymeacoffee } from "react-icons/si"
 
 import "~styles/globals.css"
 
@@ -15,6 +16,21 @@ export const BonsaiApp = ({ children }) => {
         </div>
         <div className="flex justify-center w-full h-full mt-16 mb-32">
           {children}
+        </div>
+        <div className="fixed bottom-0 right-0 mb-6 mr-4">
+          <Tooltip
+            content="Buy me a coffee"
+            placement="left"
+            showArrow
+            color="foreground">
+            <Button className="bg-background text-foreground p-2 m-0 min-w-0">
+              <a
+                href="https://www.buymeacoffee.com/madhavsikka"
+                target="_blank">
+                <SiBuymeacoffee size={36} />
+              </a>
+            </Button>
+          </Tooltip>
         </div>
       </main>
     </NextUIProvider>
