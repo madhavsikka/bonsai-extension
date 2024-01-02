@@ -1,3 +1,6 @@
+import { Divider } from "@nextui-org/react"
+import React from "react"
+
 import { ChatMessage, type ChatMessageComponentProps } from "./chat-message"
 
 export interface ChatMessageListProps {
@@ -6,9 +9,14 @@ export interface ChatMessageListProps {
 
 export const ChatMessageList = ({ messages }: ChatMessageListProps) => {
   return (
-    <div className="flex flex-col gap-y-5">
+    <div className="flex flex-col gap-y-4">
       {messages.map((message, idx) => {
-        return <ChatMessage {...message} key={idx} />
+        return (
+          <React.Fragment key={idx}>
+            <ChatMessage {...message} />
+            {idx !== messages.length - 1 && <Divider />}
+          </React.Fragment>
+        )
       })}
     </div>
   )

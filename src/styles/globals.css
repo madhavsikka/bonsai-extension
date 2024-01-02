@@ -140,7 +140,7 @@ body {
       padding: 20px;
       margin-top: 10px;
       margin-bottom: 10px;
-      background-color: hsl(var(--nextui-content2));
+      background-color: hsl(var(--nextui-content1));
       border-radius: var(--nextui-radius-medium);
     }
     & pre code {
