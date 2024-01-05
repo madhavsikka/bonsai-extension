@@ -3,9 +3,10 @@ import {
   HumanMessage,
   SystemMessage
 } from "@langchain/core/messages"
-import { Textarea } from "@nextui-org/react"
+import { Button, Textarea } from "@nextui-org/react"
 import { ChatOpenAI } from "langchain/chat_models/openai"
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
+import { FaCircleStop } from "react-icons/fa6"
 
 import { type ChatMessageComponentProps } from "~components/chat-message"
 import { ChatMessageList } from "~components/chat-message-list"
@@ -21,6 +22,8 @@ export const NewTabPage = () => {
 
   const [messages, setMessages] = useState<ChatMessageComponentProps[]>([])
   const [currentMessage, setCurrentMessage] = useState<string>("")
+  const [isStreaming, setIsStreaming] = useState<boolean>(false)
+  const [abortController, setAbortController] = useState<AbortController>()
 
   const chatModel = useMemo(
     () =>
@@ -35,6 +38,11 @@ export const NewTabPage = () => {
   const onValueChange = (value: string) => {
     setCurrentMessage(value)
   }
+
+  const handleStreamingStop = useCallback(() => {
+    abortController?.abort()
+    setIsStreaming(false)
+  }, [isStreaming])
 
   const onSendMessage = (event) => {
     if (event.key === "Enter" && event.shiftKey === false) {
@@ -71,8 +79,13 @@ export const NewTabPage = () => {
       }
 
       setMessages([...updatedMessageProps, tempMessageProps])
+      setIsStreaming(true)
+
+      const abortController = new AbortController()
+      setAbortController(abortController)
 
       chatModel.call(chatModelMessages, {
+        signal: abortController.signal,
         callbacks: [
           {
             handleLLMNewToken(token: string) {
@@ -86,6 +99,9 @@ export const NewTabPage = () => {
                     : prevMessageProp
                 )
               )
+            },
+            handleLLMEnd() {
+              setIsStreaming(false)
             }
           }
         ]
@@ -100,7 +116,17 @@ export const NewTabPage = () => {
       <div className="flex flex-col w-full sm:w-3/4 2xl:w-2/5">
         <ChatMessageList messages={messages} />
       </div>
-      <div className="flex justify-center fixed w-full sm:w-3/4 2xl:w-2/5 bottom-0 bg-background z-10 pb-8">
+      <div className="flex flex-col justify-center items-center fixed w-full sm:w-3/4 2xl:w-2/5 bottom-0 bg-background z-10 pb-8">
+        {isStreaming ? (
+          <Button
+            className="w-24 m-2 font-medium"
+            variant="bordered"
+            size="sm"
+            startContent={<FaCircleStop />}
+            onClick={handleStreamingStop}>
+            Stop
+          </Button>
+        ) : null}
         <Textarea
           variant={"bordered"}
           label="Write something"
