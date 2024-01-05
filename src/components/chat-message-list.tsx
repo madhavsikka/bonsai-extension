@@ -16,7 +16,7 @@ export const ChatMessageList = ({ messages }: ChatMessageListProps) => {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages.length])
 
   return (
     <div className="flex flex-col gap-y-4">
