@@ -137,15 +137,13 @@ body {
       margin-bottom: 5px;
     }
     & pre {
-      padding: 20px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      background-color: hsl(var(--nextui-content1));
+      margin-top: 16px;
+      margin-bottom: 16px;
+      background-color: transparent;
       border-radius: var(--nextui-radius-medium);
     }
     & pre code {
       white-space: pre-wrap;
-      padding: 10px;
     }
     & img {
       max-width: min(80%, 300px);
