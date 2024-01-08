@@ -144,7 +144,6 @@ body {
   & pre code {
     margin: 0;
     white-space: pre-wrap;
-    padding: 10px;
   }
   & img {
     max-width: min(80%, 300px);
